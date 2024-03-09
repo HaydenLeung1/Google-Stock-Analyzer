@@ -1,11 +1,11 @@
 # Google-Stock-Analyzer
 
 
-Intro
+Introduction:
 I programmed a Google Stock Analyzer, which uses machine learning techniques to make economic predictions about Google’s stock. I used a dataset from kaggle, a machine learning community, showing Google’s closing prices for the past 15 years on the S&P 500 stock index. I basically dropped the closing price column of the dataset and used machine learning to predict Google’s stock closing prices for the past 15 years.
 
 
-Libraries
+Libraries:
 First I imported all the necessary machine learning libraries. These libraries include pandas, numpy, matplotlib.pyplot, train_test_split, random forest regressor, mean squared error, seaborn, linear regressor, decision tree regressor, KNeighbors regressor, elastic net regressor, and finally XGBoost.
 
 Pandas: 
