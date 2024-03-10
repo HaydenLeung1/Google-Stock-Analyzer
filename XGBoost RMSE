@@ -1,0 +1,27 @@
+import xgboost as xgb
+from sklearn.metrics import mean_squared_error
+
+# Convert data to DMatrix format for XGBoost
+dtrain = xgb.DMatrix(X_train, label=y_train)
+dtest = xgb.DMatrix(X_test, label=y_test)
+
+# Specify XGBoost parameters
+# making a dictionary
+params = {
+    'objective': 'reg:squarederror',  # For regression tasks
+    'colsample_bytree': 0.8,
+    'learning_rate': 0.1,
+    'max_depth': 5,
+    'alpha': 10,
+}
+
+# Train the XGBoost model
+model = xgb.train(params, dtrain, num_boost_round=100)
+
+# Predictions on training set
+prediction_xgboost_train = model.predict(dtrain)
+print(f"XGBoost RMSE (Training): {np.sqrt(mean_squared_error(y_train, prediction_xgboost_train))}")
+
+# Predictions on testing set
+prediction_xgboost_test = model.predict(dtest)
+print(f"XGBoost RMSE (Testing): {np.sqrt(mean_squared_error(y_test, prediction_xgboost_test))}")
