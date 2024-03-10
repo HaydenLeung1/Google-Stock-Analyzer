@@ -1,0 +1,15 @@
+# Use K Nearest Neighbors Regression to predict the output based on the average of the k-nearest neighbors in the feature space. Basically, it predicts to the point that it is closest to
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.metrics import mean_squared_error
+
+# Train KNN Regression model
+knn_regression = KNeighborsRegressor(n_neighbors=5)  # You can adjust the number of neighbors
+knn_regression.fit(X_train, y_train)
+
+# Predictions on training set
+prediction_knn_train = knn_regression.predict(X_train)
+print(f"KNN Regression RMSE (Training): {np.sqrt(mean_squared_error(y_train, prediction_knn_train))}")
+
+# Predictions on testing set
+prediction_knn_test = knn_regression.predict(X_test)
+print(f"KNN Regression RMSE (Testing): {np.sqrt(mean_squared_error(y_test, prediction_knn_test))}")
