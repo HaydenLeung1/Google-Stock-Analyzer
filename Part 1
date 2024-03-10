@@ -1,0 +1,80 @@
+# project objective: Drop the closing price section of the dataset and use machine learning techniques to predict the closing prices throughout the 15 years.
+
+# project description:
+# we decided on programming a Google Stock Analyzer, which uses machine learning techniques to make economic predictions about Google’s stock. Over the course of this project, we studied Google's stock performance in the past 15 years. Using a pre-cleaned dataset from the machine learning community, Kaggle, we broke up the data into the training set and the testing set. We then used regression models such as Linear, Decision Tree, and Random Forest to make predictions. To enhance predictive accuracy, we also use Elastic Net Regression, which balances L1 and L2 regularization. The integration of XGBoost adds an extra layer of sophistication to our predictive modeling. Visualizations, correlation heatmaps, and feature selection will help stakeholders to understand the market dynamics.
+# Through this project, we discovered that Google’s stock closing prices went to the moon during the pandemic. We basically dropped the closing price section of the dataset and used machine learning techniques to predict the closing prices throughout the 15 years. Our model turned out to be quite accurate.
+# This project represents data science’s application to the finance world. We have coded a project that will help investors, brokers, and economists to make an informed decision about buying shares in Google.
+
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_squared_error
+import seaborn as sns
+
+# Load the dataset from kaggle
+# csv means common seperated values
+df = pd.read_csv('/content/sample_data/GOOGL.csv')
+
+print(df)
+
+# Checking for null values. there are 4430 rows of data. null values are 0.
+# In the printing, there are no null values. The data has already been cleaned.
+# using the isnull function and the sum function on the dataset, df
+print(df.isnull().sum())
+
+print(df.dtypes)
+
+# apply the datetime function to make it the correct date
+df['Date'] = pd.to_datetime(df['Date'])
+# settting all the values in date to the date time format
+df.set_index('Date', inplace=True)
+
+# Plotting the closing prices over time
+plt.figure(figsize=(12, 6))
+plt.plot(df['Close'], label='Closing Price')
+plt.title('Google Stock Price Over Time')
+plt.xlabel('Date')
+plt.ylabel('Closing Price')
+plt.legend()
+plt.show()
+
+
+# find the relationship between each column of dataset
+# Assuming you want to predict the 'Close' price
+# target_column = 'Close'
+# features = df.columns[df.columns != target_column]
+
+# use correlation heat map from matplotlib to find correlations. if x goes up, y goes up
+correlation_matrix = df.corr()
+plt.figure(figsize=(10, 8))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', linewidths=.5)
+plt.title('Correlation Heatmap')
+plt.show()
+
+# correlation heat map shows the 1 to 1 relationship
+# if one goes up, the other goes up
+# -0.45 shows not a very strong correlation, so we do not focus on that relationship at all
+# a high negative and a high positive correlation value shows the relationships and is helpful when trying to understand data
+# therefore, the volume seems not have much of a relationship with any other values in the data
+
+
+drop = df.drop("Close", axis=1)
+new = df["Close"]
+
+# after this, break off data into train and test model,
+X_train, X_test, y_train, y_test = train_test_split(drop, new, test_size=0.2, random_state=42)
+
+print("X_train shape:", X_train.shape)
+print("X_test shape:", X_test.shape)
+print("y_train shape:", y_train.shape)
+print("y_test shape:", y_test.shape)
+
+num_rows, num_columns = X_train.shape
+
+#Print number of rows and columns
+print("Number of rows in X_train:", num_rows)
+print("Number of columns in X_train:", num_columns)
