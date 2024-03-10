@@ -1,0 +1,17 @@
+from sklearn.ensemble import RandomForestRegressor
+import numpy as np
+
+# Assuming 'params' is a dictionary of hyperparameters
+params = {'n_estimators': 100, 'random_state': 42}  # Include other hyperparameters as needed
+
+# Create the RandomForestRegressor with the specified parameters
+model = RandomForestRegressor(**params)
+
+# Train the model
+model.fit(X_train, y_train)
+
+# Make predictions for the past 15 years using the trained model
+future_predictions = model.predict(drop)
+
+# Print or use future predictions as needed
+print(future_predictions)
