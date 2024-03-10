@@ -1,0 +1,38 @@
+import matplotlib.pyplot as plt
+import pandas as pd
+from sklearn.ensemble import RandomForestRegressor
+
+# Assuming 'params' is a dictionary of hyperparameters
+params = {'n_estimators': 100, 'random_state': 42}  # Include other hyperparameters as needed
+
+# Create the RandomForestRegressor with the specified parameters
+model = RandomForestRegressor(**params)
+
+# Train the model
+model.fit(X_train, y_train)
+
+# Make predictions for the past 15 years using the trained model
+future_predictions = model.predict(drop)
+
+# Convert the index of 'df' to datetime
+df.index = pd.to_datetime(df.index)
+
+# Plotting the original closing prices (original)
+plt.figure(figsize=(12, 6))
+plt.subplot(2, 1, 1)
+plt.plot(df.index, df['Close'], label='Original Closing Price', linewidth=2)
+plt.title('Google Stock Price Over Time')
+plt.xlabel('Date')
+plt.ylabel('Closing Price')
+plt.legend()
+
+# Plotting the predicted closing prices (predicted)
+plt.subplot(2, 1, 2)
+plt.plot(df.index[-len(future_predictions):], future_predictions, label='Predicted Closing Price', linestyle='dashed', color='red', linewidth=2)
+plt.title('Predicted Closing Prices Over Time')
+plt.xlabel('Date')
+plt.ylabel('Closing Price')
+plt.legend()
+
+plt.tight_layout()  # Adjust layout for better spacing
+plt.show()
